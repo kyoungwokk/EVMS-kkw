@@ -98,4 +98,9 @@ public class Product {
     public void updateStock(int stock) {
         this.stock = stock;
     }
+
+    //이미지 파일 저장
+    public void updateImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }
