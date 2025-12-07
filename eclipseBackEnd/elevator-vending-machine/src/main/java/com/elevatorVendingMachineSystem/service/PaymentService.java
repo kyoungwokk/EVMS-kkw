@@ -71,7 +71,8 @@ public class PaymentService {
         log.info("==================================================");
 
         // 찬범추 - 노트북2에 출고신호 전송
-        embeddedClientService.sendDispenseCommand(product);
+        //embeddedClientService.sendDispenseCommand(product);
+
         // 5. 재고 차감 (트랜잭션 내 수행)
         product.decreaseStock(1);
 
