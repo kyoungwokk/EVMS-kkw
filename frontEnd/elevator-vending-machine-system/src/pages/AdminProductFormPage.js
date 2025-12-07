@@ -189,15 +189,33 @@ const AdminProductFormPage = () => {
 
     // 폼 제출
     const handleSubmit = async () => {
-        // 유효성 검사 (간단 예시)
-        if (!product.name || !product.price || !product.locationCode) {
-            alert("필수 항목(이름, 가격, 위치번호)을 입력해주세요.");
+        // 1. 유효성 검사 (필수 항목 체크)
+        // 빈 값이 있으면 서버로 보내기 전에 막습니다.
+        if (!product.name || !product.price || !product.locationCode || !product.stock) {
+            alert("필수 항목(이름, 가격, 위치번호, 재고)을 입력해주세요.");
             return;
         }
 
+        // 2. 데이터 타입 변환 (핵심! ⭐)
+        // 입력값(문자열)을 서버가 원하는 타입(숫자, Null)으로 변환합니다.
+        const productToSend = {
+            ...product,
+            // "1500" -> 1500 (진짜 숫자로 변환)
+            price: Number(product.price),
+            stock: Number(product.stock),
+            locationCode: Number(product.locationCode),
+
+            // 값이 비어있으면 '' 대신 null을 보내야 에러가 안 납니다.
+            calories: product.calories ? Number(product.calories) : null,
+            // 날짜가 비어있으면 null 처리
+            expirationDate: product.expirationDate || null,
+            allergyInfo: product.allergyInfo || null
+        };
+
         const formData = new FormData();
-        // JSON 데이터 포장
-        formData.append("request", new Blob([JSON.stringify(product)], { type: "application/json" }));
+        // 3. 변환된 데이터(productToSend)를 JSON으로 포장
+        formData.append("request", new Blob([JSON.stringify(productToSend)], { type: "application/json" }));
+
         // 파일 데이터 추가
         if (file) formData.append("file", file);
 
@@ -207,13 +225,14 @@ const AdminProductFormPage = () => {
             else await client.post('/products', formData, config);
 
             alert(isEditMode ? "수정 완료!" : "등록 완료!");
-            navigate('/admin/list');
+            navigate('/adminList');
         } catch (error) {
             console.error(error);
-            alert("저장 실패! 입력값을 확인해주세요.");
+            // 에러 메시지 출력
+            const errorMsg = error.response?.data?.message || "입력값을 확인해주세요. (중복된 위치 번호이거나 서버 오류입니다)";
+            alert("저장 실패! " + errorMsg);
         }
     };
-
     // 숫자 키패드를 사용할 필드 목록
     const numericFields = ['locationCode', 'calories', 'price', 'stock'];
 
