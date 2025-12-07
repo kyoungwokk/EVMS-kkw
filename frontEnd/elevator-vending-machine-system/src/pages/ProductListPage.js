@@ -26,6 +26,13 @@ const ProductListPage = () => {
     const [products, setProducts] = useState([]); // 데이터를 담을 상태
     const [loading, setLoading] = useState(true); // 로딩 상태
 
+    useEffect(() => {
+        fetch("http://localhost:8080/api/products")
+            .then(res => res.json())
+            .then(data => console.log("연결 성공:", data))
+            .catch(err => console.error("연결 실패:", err));
+    }, []);
+
     // 화면이 켜지면 스프링부트에 데이터 요청
     useEffect(() => {
         const fetchProducts = async () => {
@@ -59,7 +66,12 @@ const ProductListPage = () => {
                     >
                         {/* 이미지 경로가 절대경로(http...)인지 상대경로(/images...)인지에 따라 처리 필요 */}
                         {product.imageUrl ? (
-                            <img src={product.imageUrl} alt={product.name} style={{height: '100px'}} />
+                            <img
+                                src={`http://localhost:8080${product.imageUrl}`}
+                                alt={product.name}
+                                style={{ height: '100px' }}
+                            />
+
                         ) : (
                             <div style={{height: '100px', background: '#eee'}}>이미지 없음</div>
                         )}

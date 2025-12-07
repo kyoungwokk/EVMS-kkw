@@ -21,14 +21,14 @@ const PaymentPage = () => {
         // 백엔드 PaymentDto.Request 구조에 맞춰 데이터 생성
         const paymentData = {
             productId: selectedProduct.id,
-            amount: selectedProduct.price,
-            paymentMethod: method, // 'CARD' or 'CASH' (Enum 처리 확인 필요)
-            quantity: 1 // 수량 로직이 있다면 추가
+            method: method,                 // "CARD" or "CASH"
+            insertedAmount: selectedProduct.price, // 현금 투입 기능 없으므로 기본값
+            needReceipt: false
         };
 
         try {
             // PaymentController의 @PostMapping 실행
-            const response = await client.post('/payments', paymentData);
+            const response = await client.post('/api/payments', paymentData);
 
             if (response.data.success) {
                 // 결제 성공

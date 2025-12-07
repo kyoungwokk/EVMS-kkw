@@ -42,7 +42,10 @@ const ProductDetailPage = () => {
 
     // 이미지 URL 처리 (http로 시작하지 않으면 서버 주소 붙여주기 등 상황에 맞게 조정 가능)
     // 현재는 DB에 저장된 URL을 그대로 사용한다고 가정합니다.
-    const imageUrl = product.imageUrl || "https://via.placeholder.com/300x400?text=No+Image";
+    const imageUrl = product.imageUrl
+        ? `http://localhost:8080${product.imageUrl}`
+        : "https://via.placeholder.com/300x400?text=No+Image";
+
 
     return (
         <div style={{

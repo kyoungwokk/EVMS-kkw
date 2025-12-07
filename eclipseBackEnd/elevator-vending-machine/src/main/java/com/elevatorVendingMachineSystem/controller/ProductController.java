@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/products")
-@CrossOrigin(origins = "http://localhost:3000") // React 개발 서버 허용
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"}) // React 개발 서버 허용
 public class ProductController {
 
     private final ProductService productService;
