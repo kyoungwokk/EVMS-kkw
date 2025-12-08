@@ -70,8 +70,9 @@ public class PaymentService {
                 product.getName(), product.getLocationCode());
         log.info("==================================================");
 
-        // 찬범추 - 노트북2에 출고신호 전송
+        // 찬범추가 - 노트북2에 출고신호 전송 - 테스트할때는 꺼도 될듯
         embeddedClientService.sendDispenseCommand(product);
+
         // 5. 재고 차감 (트랜잭션 내 수행)
         product.decreaseStock(1);
 
