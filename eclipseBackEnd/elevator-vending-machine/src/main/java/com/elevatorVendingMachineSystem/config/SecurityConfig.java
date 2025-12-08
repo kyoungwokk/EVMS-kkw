@@ -22,6 +22,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable) // REST API이므로 CSRF 보안 해제
                 .authorizeHttpRequests(auth -> auth
                         // 1. 공용 접근 허용 (로그인 불필요)
@@ -58,6 +59,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
     // 제품 삭제를 위해 추가
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -72,6 +74,7 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", config);
         return source;
     }
+
     // 비밀번호 암호화 도구 (BCrypt)
     @Bean
     public PasswordEncoder passwordEncoder() {

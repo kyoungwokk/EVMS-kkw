@@ -30,7 +30,8 @@ int main() {
 
     // 3. 서버 주소 설정
     serverAddr.sin_family = AF_INET;
-    serverAddr.sin_addr.s_addr = inet_addr("192.168.45.246"); // 노트북2 IP로 설정
+    // serverAddr.sin_addr.s_addr = inet_addr("192.168.45.246"); // 노트북2 IP로 설정
+    serverAddr.sin_addr.s_addr = htonl(INADDR_ANY); // 내 컴퓨터의 모든 IP 허용
     serverAddr.sin_port = htons(5000);
 
     // 4. 바인드

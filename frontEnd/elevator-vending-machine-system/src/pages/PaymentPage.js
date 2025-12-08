@@ -28,7 +28,7 @@ const PaymentPage = () => {
 
         try {
             // PaymentController의 @PostMapping 실행
-            const response = await client.post('/api/payments', paymentData);
+            const response = await client.post('/payments', paymentData);
 
             if (response.data.success) {
                 // 결제 성공
