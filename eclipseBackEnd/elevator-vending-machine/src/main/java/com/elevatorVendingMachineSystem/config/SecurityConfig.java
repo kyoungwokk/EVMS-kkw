@@ -30,18 +30,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/payments").permitAll()   // 결제 요청
 
                         // 2. 관리자 전용 (로그인 필요)
-                        //.requestMatchers(HttpMethod.POST, "/api/products").hasRole("ADMIN") // 상품 등록
-                        //.requestMatchers(HttpMethod.PUT, "/api/products/**").hasRole("ADMIN") // 상품 수정
-                        //.requestMatchers(HttpMethod.DELETE, "/api/products/**").hasRole("ADMIN") // 상품 삭제
-                        //.requestMatchers("/api/admin/**").hasRole("ADMIN") // 관리자 전용 API
+                        .requestMatchers(HttpMethod.POST, "/api/products").hasRole("ADMIN") // 상품 등록
+                        .requestMatchers(HttpMethod.PUT, "/api/products/**").hasRole("ADMIN") // 상품 수정
+                        .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasRole("ADMIN") // 상품 삭제
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN") // 관리자 전용 API
 
-                        // 빠른 진행을 위해 권한 허용함
-                        // 삭제를 위한 권한 추가
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/products").permitAll()   // 상품 등록
-                        .requestMatchers(HttpMethod.PUT, "/api/products/**").permitAll() // 상품 수정
-                        .requestMatchers(HttpMethod.DELETE, "/api/products/**").permitAll() // 상품 삭제
-                        .requestMatchers("/api/admin/**"). permitAll() // 관리자 전용 API
+
                         // 경욱이 추가한 경로 제품 이미지와 결제
                         .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
                         .requestMatchers("/images/**").permitAll()
@@ -49,10 +43,8 @@ public class SecurityConfig {
 
                         //
 
-                        // 그 외 모든 요청은 인증 필요
-                        //.anyRequest().authenticated()
-                        // 원활한 개발을 위해
-                        .anyRequest().permitAll()
+
+                        .anyRequest().authenticated()
 
                 )
                 .httpBasic(Customizer.withDefaults()); // HTTP Basic Auth 활성화

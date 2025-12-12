@@ -53,11 +53,25 @@ const AdminProductListPage = () => {
                         + 신규 상품 등록
                     </button>
                     <button
-                        onClick={() => navigate('/')}
-                        style={{ padding: '10px 20px', backgroundColor: '#95a5a6', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
+                        style={{
+                            padding: '10px 20px',
+                            backgroundColor: '#e0e0e0',
+                            color: '#333',
+                            border: '1px solid #ccc',
+                            borderRadius: '5px',
+                            cursor: 'pointer',
+                            fontWeight: 'bold'
+                        }}
+
+                        onClick={() => {
+                            localStorage.removeItem('isAdmin'); // 관리자 로그아웃
+                            navigate('/');
+
+                        }}
                     >
                         사용자 모드로 돌아가기
                     </button>
+
                 </div>
             </div>
 
